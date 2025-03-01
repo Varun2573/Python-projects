@@ -28,7 +28,7 @@ pip install streamlit requests tiktoken openai
 ## Setup Instructions
 
 1. Clone the Repository:
-    https://github.com/Varun2573/Python-projects/tree/main/Chatbot Using Gorq API
+    [https://github.com/Varun2573/Python-projects/tree/main/Chatbot Using Gorq API](https://github.com/Varun2573/Python-projects/tree/main/Chatbot%20Using%20Gorq%20API)
 
 2. Set your Groq API key: 
     In the code, replace the GROQ_API_KEY variable with your own Groq API key.
@@ -58,6 +58,7 @@ This application includes a token counter for both user inputs and bot responses
 ## Example Conversation
 
 User: "Hello, how are you?"
+
 Bot: "I'm good, thank you for asking! How can I assist you today?"
 
 ## Notes
