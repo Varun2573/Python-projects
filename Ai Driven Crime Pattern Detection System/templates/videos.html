@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Detection Videos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+        }
+        .logout-btn {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+        .logout-btn:hover {
+            background-color: #cc0000;
+        }
+        h1 {
+            color: #333;
+        }
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .video-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 320px;
+        }
+        video {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .upload-time {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header with Logout Button -->
+    <div class="header">
+        <h2>Crime Detection Videos</h2>
+        <button class="logout-btn" onclick="handleLogout()">Logout</button>
+    </div>
+
+    {% if videos %}
+        <div class="video-container">
+            {% for video in videos %}
+                <div class="video-card">
+                    <h3>{{ video.filename }}</h3>
+                    <p class="upload-time">Uploaded on: {{ video.uploadDate }}</p>
+                    <video controls>
+                        <source src="/video/{{ video._id }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No crime-related videos found.</p>
+    {% endif %}
+
+    <script>
+        function handleLogout() {
+            localStorage.removeItem('loggedInUser'); // Clear session
+            window.location.href = "/"; // Redirect to login page
+        }
+    </script>
+
+</body>
+</html>
