@@ -1,8 +1,6 @@
 import os
 import cv2
 import base64
-import pymongo
-import gridfs
 import google.generativeai as genai
 from dotenv import load_dotenv
 
@@ -10,11 +8,6 @@ from dotenv import load_dotenv
 load_dotenv()
 API_KEY = os.getenv("gemini_api_key")
 genai.configure(api_key=API_KEY)
-
-# Connect to MongoDB (Running Locally)
-client = pymongo.MongoClient("mongodb://localhost:27017/")
-db = client["MajorProject"]
-fs = gridfs.GridFS(db)
 
 # Function to extract key frames
 def extract_key_frames(video_path, output_folder, frame_interval=5):
@@ -62,7 +55,7 @@ def detect_crime_type(video_path):
     model = genai.GenerativeModel("gemini-1.5-pro")  # Use "gemini-1.5-flash" for faster results
     images_data = encode_images(key_frames)
 
-    # 🔹 Strict list of crime types (No "Surveillance" or irrelevant answers)
+    # 🔹 Strict list of crime types (No Surveillance!)
     prompt_text = """
     Identify the crime type from the given images. Choose only one of the following options:
     
@@ -106,22 +99,7 @@ def detect_crime_type(video_path):
     except Exception as e:
         return f"Error: {str(e)}"
 
-# Function to store video in MongoDB only if a crime is detected
-def store_video_if_crime_detected(video_path):
-    crime_type = detect_crime_type(video_path)
-    
-    if crime_type == "No Crime Detected":
-        print("✅ No crime detected. Video will NOT be stored in the database.")
-        return
-    
-    print(f"🚨 Crime Detected: {crime_type}. Storing video in MongoDB...")
-
-    # Store video in MongoDB
-    with open(video_path, "rb") as video_file:
-        video_id = fs.put(video_file, filename=os.path.basename(video_path), crime_type=crime_type)
-    
-    print(f"✅ Video stored in MongoDB with ID: {video_id} (Crime Type: {crime_type})")
-
 # Example usage
-video_path = "testing.webm"
-store_video_if_crime_detected(video_path)
+video_path = "C:/Users/tejav/OneDrive/Desktop/MajorProject/uploaded_videos/WhatsApp Video 2025-02-28 at 23.04.32_74933da8.mp4"
+crime_type = detect_crime_type(video_path)
+print("\nDetected Crime Type:", crime_type)

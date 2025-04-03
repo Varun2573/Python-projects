@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Crime Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        #video-preview {
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+            display: none; /* Hidden initially */
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .upload-btn {
+            background-color: #007bff;
+            color: white;
+        }
+        .detect-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        .camera-btn {
+            background-color: #ff5733;
+            color: white;
+        }
+        .stop-btn {
+            background-color: #dc3545;
+            color: white;
+            display: none;
+        }
+        .result {
+            font-size: 18px;
+            margin-top: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI-Driven Crime Detection</h1>
+
+    <!-- Video Preview (Hidden Initially) -->
+    <video id="video-preview" controls></video>
+
+    <!-- Upload File -->
+    <input type="file" id="videoFile" accept="video/*">
+    <button class="upload-btn" onclick="uploadVideo()">Upload & Detect</button>
+
+    <!-- Detect from Camera -->
+    <button class="camera-btn" onclick="startRealTime()">Detect in Real-Time</button>
+    <button class="stop-btn" id="stopButton" onclick="stopRealTime()">Stop</button>
+
+    <!-- Display Result -->
+    <p class="result" id="resultText">Detection result will appear here...</p>
+
+    <script>
+        async function uploadVideo() {
+            const fileInput = document.getElementById('videoFile');
+            if (!fileInput.files.length) {
+                alert("Please select a video file!");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append("file", file);
+
+            // Hide preview initially
+            document.getElementById("video-preview").style.display = "none";
+            document.getElementById("resultText").innerText = "Processing video, please wait...";
+
+            const response = await fetch('/upload-video/', { method: 'POST', body: formData });
+            const data = await response.json();
+
+            document.getElementById('resultText').innerText = `🔍 ${data.message} - ${data.crime_type}`;
+
+            // Show video preview AFTER detection (regardless of result)
+            const preview = document.getElementById("video-preview");
+            const fileURL = URL.createObjectURL(file);
+            preview.src = fileURL;
+            preview.style.display = "block";
+        }
+
+        function startRealTime() {
+            document.getElementById("stopButton").style.display = "inline";
+        }
+
+        function stopRealTime() {
+            document.getElementById("stopButton").style.display = "none";
+        }
+    </script>
+</body>
+</html>
