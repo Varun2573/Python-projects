@@ -7,9 +7,10 @@ import pymongo
 import google.generativeai as genai
 from dotenv import load_dotenv
 from fastapi import FastAPI, File, UploadFile, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi.templating import Jinja2Templates
 from twilio.rest import Client
+import time
 
 # Load API keys and Twilio credentials
 load_dotenv()
@@ -35,6 +36,7 @@ templates = Jinja2Templates(directory="templates")
 
 # Setup Twilio client
 twilio_client = Client(TWILIO_SID, TWILIO_AUTH_TOKEN)
+
 
 # Function to extract key frames
 def extract_key_frames(video_path, output_folder, frame_interval=5):
@@ -139,10 +141,51 @@ async def upload_video(file: UploadFile = File(...)):
     return JSONResponse(content={"message": "No crime detected, video not stored.", "crime_type": crime_type})
 
 
-# Route: Real-Time Detection (Needs Fixing)
+# Route: Real-Time Detection with Camera Preview
 @app.get("/detect-real-time/")
 async def detect_real_time():
-    return JSONResponse(content={"message": "Real-time crime detection is not yet implemented.", "crime_type": "N/A"})
+    video_path = "uploads/realtime_capture.avi"
+    os.makedirs("uploads", exist_ok=True)
+
+    cap = cv2.VideoCapture(0)  # Open webcam
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    out = cv2.VideoWriter(video_path, fourcc, 10.0, (640, 480))
+
+    start_time = time.time()
+    while time.time() - start_time < 10:  # Record for 10 seconds
+        ret, frame = cap.read()
+        if not ret:
+            break
+        out.write(frame)
+
+    cap.release()
+    out.release()
+
+    # Detect crime
+    crime_type = detect_crime_type(video_path)
+
+    # If crime detected, store video & alert
+    if crime_type.lower() != "no crime":
+        with open(video_path, "rb") as video_file:
+            video_id = fs.put(video_file, filename="realtime_capture.avi")
+        send_alert(crime_type, video_id)
+        return JSONResponse(content={"message": "Crime detected in real-time!", "crime_type": crime_type, "video_id": str(video_id)})
+
+    return JSONResponse(content={"message": "No crime detected in real-time.", "crime_type": crime_type})
 
 
-# Run the server: `uvicorn main:app --reload`
+# Route: Stream Camera Preview
+@app.get("/camera-feed/")
+def camera_feed():
+    cap = cv2.VideoCapture(0)
+
+    def generate():
+        while True:
+            ret, frame = cap.read()
+            if not ret:
+                break
+            _, buffer = cv2.imencode(".jpg", frame)
+            frame_bytes = buffer.tobytes()
+            yield (b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + frame_bytes + b"\r\n")
+
+    return StreamingResponse(generate(), media_type="multipart/x-mixed-replace; boundary=frame")
