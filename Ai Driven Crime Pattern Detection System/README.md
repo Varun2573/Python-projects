@@ -41,15 +41,7 @@ This project is a full-stack solution for detecting crimes from CCTV footage (up
 
 ### Python Dependencies
 
----bash
-fastapi
-uvicorn
-pymongo
-python-dotenv
-jinja2
-psycopg2-binary
-opencv-python
-twilio
+pip install fastapi uvicorn pymongo python-dotenv jinja2 psycopg2-binary opencv-python twilio
 
 
 ---
@@ -57,10 +49,15 @@ twilio
 ## Setup .env file
 
 DB_URL=postgresql://username:password@localhost:5432/yourdb
+
 TWILIO_SID=your_twilio_sid
+
 TWILIO_TOKEN=your_twilio_token
+
 TWILIO_FROM=your_twilio_number
+
 TWILIO_TO=recipient_number
+
 GEMINI_API_KEY=your_gemini_api_key
 
 ## Create a table in PostgreSQL to register the user
