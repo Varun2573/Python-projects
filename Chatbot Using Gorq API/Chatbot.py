@@ -1,11 +1,11 @@
-import os
+
 import streamlit as st
 import requests
 import tiktoken
 import openai
 
 # Set the base URL and the API key for Groq (through OpenAI compatibility)
-GROQ_API_KEY = "YOUR API KEY"
+GROQ_API_KEY = st.secrets["GROQ_API_KEY"]
 openai.api_key = GROQ_API_KEY
 openai.api_base = "https://api.groq.com/openai/v1"  # Correct base URL for Groq
 
