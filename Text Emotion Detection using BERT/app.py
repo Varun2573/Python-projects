@@ -7,7 +7,7 @@ import ktrain
 from ktrain import text
 
 # Load the ktrain predictor
-predictor = ktrain.load_predictor("https://drive.google.com/drive/folders/1Cp_oNp6S85lONClDbOUd7IW5VbthoY0C?usp=sharing")
+predictor = ktrain.load_predictor("https://drive.google.com/drive/folders/1Cp_oNp6S85lONClDbOUd7IW5VbthoY0C?usp=sharing/")
 
 emotions_emoji_dict = {
     "anger": "😠", "disgust": "🤮", "fear": "😨😱", "happy": "🤗",
