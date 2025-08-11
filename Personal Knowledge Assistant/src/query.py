@@ -1,12 +1,8 @@
-
-import os
-from dotenv import load_dotenv
 from langchain.vectorstores import FAISS
 from langchain.chains import RetrievalQA
 from langchain.llms import GoogleGenerativeAI
 from langchain.embeddings import GoogleGenerativeAIEmbeddings
 
-load_dotenv()
 GOOGLE_API_KEY ="AIzaSyDkTqFKkphvtqD4rmmFiEaSrPSNp7-tws4"
 
 def load_chain():
