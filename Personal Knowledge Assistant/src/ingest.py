@@ -3,7 +3,7 @@
 from langchain.document_loaders import PyMuPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import FAISS
-from langchain.embeddings import GoogleGenerativeAIEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from dotenv import load_dotenv
 
 GOOGLE_API_KEY = "AIzaSyDkTqFKkphvtqD4rmmFiEaSrPSNp7-tws4"
