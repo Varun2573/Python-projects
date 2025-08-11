@@ -11,7 +11,7 @@ def load_chain():
 
     retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
 
-    llm = GoogleGenerativeAI(model="models/gemini-pro", google_api_key=GOOGLE_API_KEY)
+    llm = GoogleGenerativeAI(model="models/gemini-2.0-flash", google_api_key=GOOGLE_API_KEY)
 
     qa_chain = RetrievalQA.from_chain_type(llm=llm, retriever=retriever, return_source_documents=True)
     return qa_chain
