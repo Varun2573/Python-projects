@@ -1,4 +1,4 @@
-from langchain.vectorstores import FAISS
+from langchain_community.vectorstores import FAISS
 from langchain.chains import RetrievalQA
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
@@ -8,7 +8,7 @@ GOOGLE_API_KEY ="AIzaSyDkTqFKkphvtqD4rmmFiEaSrPSNp7-tws4"
 
 def load_chain():
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=GOOGLE_API_KEY)
-    vectorstore = FAISS.load_local("faiss_index", embeddings)
+    vectorstore = FAISS.load_local("faiss_index", embeddings,allow_dangerous_deserialization=True)
 
     retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
 
