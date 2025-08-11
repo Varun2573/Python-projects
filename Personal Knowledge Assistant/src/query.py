@@ -1,4 +1,4 @@
-# src/query.py
+
 import os
 from dotenv import load_dotenv
 from langchain.vectorstores import FAISS
