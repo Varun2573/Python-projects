@@ -9,3 +9,4 @@ google-generativeai
 PyMuPDF
 unstructured
 python-dotenv
+langchain-community
