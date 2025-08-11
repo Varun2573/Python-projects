@@ -14,3 +14,5 @@ langchain_google_genai
 numpy
 seaborn
 ktrain==0.41.4
+gdown
+zipfile
