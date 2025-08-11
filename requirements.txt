@@ -11,3 +11,4 @@ unstructured
 python-dotenv
 langchain-community
 langchain_google_genai
+numpy
