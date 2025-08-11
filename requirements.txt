@@ -15,3 +15,4 @@ numpy
 seaborn
 ktrain==0.41.4
 gdown
+tensorflow==2.19.0
