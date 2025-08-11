@@ -2,3 +2,10 @@ streamlit>=1.32.0
 requests>=2.31.0
 tiktoken>=0.5.1
 openai>=1.30.0
+langchain
+faiss-cpu
+streamlit
+google-generativeai
+PyMuPDF
+unstructured
+python-dotenv
