@@ -7,7 +7,7 @@ from langchain.llms import GoogleGenerativeAI
 from langchain.embeddings import GoogleGenerativeAIEmbeddings
 
 load_dotenv()
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+GOOGLE_API_KEY ="AIzaSyDkTqFKkphvtqD4rmmFiEaSrPSNp7-tws4"
 
 def load_chain():
     embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=GOOGLE_API_KEY)
