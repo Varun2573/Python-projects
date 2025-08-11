@@ -1,9 +1,10 @@
+import streamlit as st
 from langchain.document_loaders import PyMuPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
-GOOGLE_API_KEY = "AIzaSyDkTqFKkphvtqD4rmmFiEaSrPSNp7-tws4"
+GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 
 def ingest_docs(file_path: str):
     loader = PyMuPDFLoader(file_path)

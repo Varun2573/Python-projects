@@ -1,7 +1,8 @@
+import streamlit as st
 from langchain_community.vectorstores import FAISS
 from langchain.chains import RetrievalQA
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
-GOOGLE_API_KEY ="AIzaSyDkTqFKkphvtqD4rmmFiEaSrPSNp7-tws4"
+GOOGLE_API_KEY =st.secrets["GOOGLE_API_KEY"]
 def load_chain():
     # Load embeddings (no recomputation, just needed for loading index)
     embeddings = GoogleGenerativeAIEmbeddings(
