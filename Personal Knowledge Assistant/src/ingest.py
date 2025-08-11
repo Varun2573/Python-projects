@@ -1,5 +1,5 @@
 
-import os
+
 from langchain.document_loaders import PyMuPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import FAISS
@@ -7,7 +7,7 @@ from langchain.embeddings import GoogleGenerativeAIEmbeddings
 from dotenv import load_dotenv
 
 load_dotenv()
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+GOOGLE_API_KEY = "AIzaSyDkTqFKkphvtqD4rmmFiEaSrPSNp7-tws4"
 
 def ingest_docs(file_path: str):
     loader = PyMuPDFLoader(file_path)
