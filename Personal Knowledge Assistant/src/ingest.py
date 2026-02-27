@@ -14,7 +14,7 @@ def ingest_docs(file_path: str):
     chunks = splitter.split_documents(documents)
 
     embeddings = GoogleGenerativeAIEmbeddings(
-        model="models/embedding-001",
+        model="models/text-embedding-004",
         google_api_key=GOOGLE_API_KEY
     )
     
