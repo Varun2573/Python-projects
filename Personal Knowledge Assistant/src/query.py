@@ -1,15 +1,12 @@
 import streamlit as st
 from langchain_community.vectorstores import FAISS
-from langchain_community.chains import RetrievalQA
-from langchain_google_genai import (
-    ChatGoogleGenerativeAI,
-    GoogleGenerativeAIEmbeddings
-)
+from langchain.chains import RetrievalQA
+from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 
 GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
 
 def load_chain():
-    # Embeddings (must match ingest.py model)
+    # Embeddings
     embeddings = GoogleGenerativeAIEmbeddings(
         model="text-embedding-004",
         google_api_key=GOOGLE_API_KEY
@@ -24,12 +21,13 @@ def load_chain():
 
     retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
 
-    # Gemini LLM
+    # LLM
     llm = ChatGoogleGenerativeAI(
         model="gemini-2.0-flash",
         google_api_key=GOOGLE_API_KEY
     )
 
+    # RetrievalQA
     qa_chain = RetrievalQA.from_chain_type(
         llm=llm,
         retriever=retriever,
