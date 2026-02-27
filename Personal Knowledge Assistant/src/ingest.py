@@ -18,7 +18,7 @@ def ingest_docs(file_path: str):
 
         # Create embeddings
         embeddings = GoogleGenerativeAIEmbeddings(
-            model="models/text-embedding-3-large",  # ✅ updated
+            model="models/gemini-embedding-001",  # ✅ updated
             google_api_key=GOOGLE_API_KEY
         )
 
