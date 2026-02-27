@@ -11,7 +11,7 @@ def load_chain():
         return None
 
     embeddings = GoogleGenerativeAIEmbeddings(
-        model="models/text-embedding-3-large",
+        model="models/gemini-embedding-001",
         google_api_key=GOOGLE_API_KEY
     )
 
