@@ -1,22 +1,23 @@
-streamlit>=1.32.0
-
 # Core
+streamlit>=1.32.0
 requests>=2.31.0
-python-dotenv
-numpy<2.0
-
-# LangChain
-langchain>=0.2.0
-langchain-community
-langchain-google-genai>=2.0.0
-langchain-text-splitters>=0.2.0
-
-# Gemini (NEW SDK ONLY)
-google-genai>=0.3.0
-
-# Vector store
-faiss-cpu
-
-# PDF
+numpy
 PyMuPDF
 unstructured
+python-dotenv
+
+# LangChain ecosystem
+langchain>=0.2.15
+langchain-community
+langchain-google-genai>=2.0.0
+
+# FAISS for vector search
+faiss-cpu
+
+# Google Gemini / embeddings
+google-generativeai>=0.8.0
+
+# Optional / ML support
+tensorflow==2.12.0
+keras==2.12.0
+transformers==4.30.2
