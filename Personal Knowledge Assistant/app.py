@@ -1,6 +1,7 @@
 import streamlit as st
 from src.ingest import ingest_docs
 from src.query import load_chain
+import os
 
 st.set_page_config(page_title="📚 Personalized Knowledge Assistant")
 st.title("🧠 Ask Your Docs")
@@ -24,9 +25,12 @@ if uploaded_file and not st.session_state.index_ready:
         ingest_docs("temp_uploaded_file.pdf")
         st.session_state.index_ready = True
 
-# Load the QA chain
-if st.session_state.index_ready and st.session_state.chain is None:
-    st.session_state.chain = load_chain()
+# Only load chain if FAISS index exists
+if st.session_state.index_ready or os.path.exists("faiss_index/index.faiss"):
+    if st.session_state.chain is None:
+        st.session_state.chain = load_chain()
+else:
+    st.info("Upload a PDF to build the index first.")
 
 # Ask questions
 if st.session_state.chain:
